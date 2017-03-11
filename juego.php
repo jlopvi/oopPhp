@@ -8,6 +8,7 @@ abstract class Unit {
   protected $name;
   protected $hp = 40;
   protected $armor;
+  protected $weapon;
   protected $attackCount = 0;
   public function __construct($name)
   {
@@ -21,7 +22,14 @@ abstract class Unit {
 
   public function attack(Unit $opponent)
   {
-    show("{$this->name} ataca a $opponent");
+    if($this->weapon)
+    {
+      $damage = $this->damage * 2;
+      show("{$this->name} ataca con {$this->weapon->getName()} a {$opponent->name} cusando un dano de $damage");
+    }else{
+      $damage = $this->damage;
+    }
+    $opponent->takeDamage($damage);
   }
 
   public function getName()
@@ -55,6 +63,20 @@ abstract class Unit {
     $this->armor = $armor;
   }
 
+  public function setWeapon(Weapon $weapon = null)
+  {
+    $this->weapon = $weapon;
+  }
+
+  protected function incrementeAttack($damage)
+  {
+    if($this->weapon)
+    {
+      $damage = $this->weapon->incrementeAttack($damage);
+      show("Tu poder se ha incrementado a $damage");
+    }
+    return $damage;
+  }
   protected function absorbDamage($damage)
   {
     if($this->armor instanceof LegendaryArmor && $this->attackCount < 2)
@@ -80,22 +102,6 @@ class Soldier extends Unit {
   {
     parent::__construct($name);
   }
-
-  public function attack(Unit $opponent)
-  {
-    echo "<p>{$this->name} ataca con la espada a {$opponent->getName()}</p>";
-
-    $opponent->takeDamage($this->damage);
-  }
-
-  // protected function absorbDamage($damage)
-  // {
-  //   if ($this->armor)
-  //   {
-  //     $damage = $this->armor->absorbDamage($damage);
-  //   }
-  //   return $damage;
-  // }
 }
 
 class Archer extends Unit {
@@ -107,28 +113,16 @@ class Archer extends Unit {
 
     $opponent->takeDamage($this->damage);
   }
-  // protected function absorbDamage($damage)
-  // {
-  //   if(rand(0, 1) == 1)
-  //   {
-  //     if($this->armor)
-  //     {
-  //       $damage = $this->armor->absorbDamage($damage);
-  //     }
-  //     return $damage;
-  //   }else {
-  //     show("{$this->name} ha esquivado el ataque");
-  //   }
-  //
-  //
-  // }
-
-
 }
 
 interface Armor
 {
   public function absorbDamage($damage);
+}
+
+interface Weapon
+{
+  public function incrementeAttack($damage);
 }
 
 class BronceArmor implements Armor
@@ -155,20 +149,36 @@ class LegendaryArmor implements Armor
   }
 }
 
+class Scalibur implements Weapon
+{
+  protected $name = 'Scalibur';
+
+  public function incrementeAttack($damage)
+  {
+    $damage = $damage * 2;
+    return $damage;
+  }
+
+  public function getName()
+  {
+    return $this->name;
+  }
+}
+
 $armor = new BronceArmor();
 $silverA = new SilverArmor();
 $legenA = new LegendaryArmor();
+$scaliburW= new Scalibur();
 
 $jlopvi = new Soldier('jlopvi');
-// $jlopvi->move('el norte');
-$jlopvi->setArmor($legenA);
+$jlopvi->setArmor($silverA);
+$jlopvi->setWeapon($scaliburW);
 
 $jeez = new Archer('jeez');
 $jeez->setArmor($silverA);
 
-$jeez->attack($jlopvi);
-$jeez->attack($jlopvi);
-
 $jlopvi->attack($jeez);
-$jeez->attack($jlopvi);
+
+
+
  ?>
