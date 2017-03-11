@@ -53,7 +53,6 @@ abstract class Unit {
     return $damage;
   }
 
-
 }
 
 class Soldier extends Unit {
