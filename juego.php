@@ -102,6 +102,16 @@ class Soldier extends Unit {
   {
     parent::__construct($name);
   }
+<<<<<<< HEAD
+=======
+
+  public function attack(Unit $opponent)
+  {
+    echo "<p>{$this->name} ataca con la espada a {$opponent->getName()}</p>";
+
+    $opponent->takeDamage($this->damage);
+  }
+>>>>>>> 488d6e8e726cfb15c861ce54454d1756aeb0e000
 }
 
 class Archer extends Unit {
@@ -171,8 +181,13 @@ $legenA = new LegendaryArmor();
 $scaliburW= new Scalibur();
 
 $jlopvi = new Soldier('jlopvi');
+<<<<<<< HEAD
 $jlopvi->setArmor($silverA);
 $jlopvi->setWeapon($scaliburW);
+=======
+
+$jlopvi->setArmor($legenA);
+>>>>>>> 488d6e8e726cfb15c861ce54454d1756aeb0e000
 
 $jeez = new Archer('jeez');
 $jeez->setArmor($silverA);
