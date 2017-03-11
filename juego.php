@@ -87,15 +87,6 @@ class Soldier extends Unit {
 
     $opponent->takeDamage($this->damage);
   }
-
-  // protected function absorbDamage($damage)
-  // {
-  //   if ($this->armor)
-  //   {
-  //     $damage = $this->armor->absorbDamage($damage);
-  //   }
-  //   return $damage;
-  // }
 }
 
 class Archer extends Unit {
@@ -107,23 +98,6 @@ class Archer extends Unit {
 
     $opponent->takeDamage($this->damage);
   }
-  // protected function absorbDamage($damage)
-  // {
-  //   if(rand(0, 1) == 1)
-  //   {
-  //     if($this->armor)
-  //     {
-  //       $damage = $this->armor->absorbDamage($damage);
-  //     }
-  //     return $damage;
-  //   }else {
-  //     show("{$this->name} ha esquivado el ataque");
-  //   }
-  //
-  //
-  // }
-
-
 }
 
 interface Armor
@@ -160,7 +134,7 @@ $silverA = new SilverArmor();
 $legenA = new LegendaryArmor();
 
 $jlopvi = new Soldier('jlopvi');
-// $jlopvi->move('el norte');
+
 $jlopvi->setArmor($legenA);
 
 $jeez = new Archer('jeez');
