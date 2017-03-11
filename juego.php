@@ -77,8 +77,6 @@ class Soldier extends Unit {
     $opponent->takeDamage($this->damage);
   }
 
-
-
   protected function absorbDamage($damage)
   {
     if ($this->armor)
